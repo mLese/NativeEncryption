@@ -2,7 +2,13 @@
 <resources>
 
     <string name="app_name">Native Encryption</string>
+    <string name="generate_file">Generate File</string>
+    <string name="encrypt_library">Encrypt Library</string>
+    <string name="encrypt_native">Encrypt Native</string>
+    <string name="decrypt_library">Decrypt Library</string>
+    <string name="decrypt_native">Decrypt Native</string>
+    <string name="completion_time">Completion Time</string>
+
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
 
 </resources>

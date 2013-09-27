@@ -8,9 +8,48 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/generate_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="@string/generate_file"/>
+
+    <Button
+        android:id="@+id/encrypt_library"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/generate_file"
+        android:text="@string/encrypt_library"/>
+
+    <Button
+        android:id="@+id/encrypt_native"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/encrypt_library"
+        android:layout_below="@+id/generate_file"
+        android:text="@string/encrypt_native"/>
+
+    <Button
+        android:id="@+id/decrypt_library"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/encrypt_library"
+        android:text="@string/decrypt_library"/>
+
+    <Button
+        android:id="@+id/decrypt_native"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/encrypt_library"
+        android:layout_toRightOf="@+id/decrypt_library"
+        android:text="@string/decrypt_native"/>
+
+    <TextView
+        android:id="@+id/completion_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/decrypt_library"
+        android:paddingTop="8dp"
+        android:text="@string/completion_time"/>
 
 </RelativeLayout>
