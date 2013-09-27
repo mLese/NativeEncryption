@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
     };
 
     private void encryptLibrary(){
-        // encrypt using java libs
+        Encryption.encryptLibrary();
     }
 
     View.OnClickListener encryptNativeListener = new View.OnClickListener() {
