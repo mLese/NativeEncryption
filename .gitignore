@@ -22,6 +22,9 @@ local.properties
 
 proguard/
 
+# JNI Build Files
+obj/
+
 # Android Studio Files
 .idea/
 *.iml
