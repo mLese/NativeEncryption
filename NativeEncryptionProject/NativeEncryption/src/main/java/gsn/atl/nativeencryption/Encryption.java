@@ -33,8 +33,8 @@ public class Encryption {
         }
 
         File directory = Environment.getExternalStorageDirectory();
-        File inputFile = new File(directory.getAbsolutePath() + "/jibberish.data");
-        File outputFile = new File(directory.getAbsolutePath() + "/encrypted_jibberish.data");
+        File inputFile = new File(directory.getAbsolutePath() + MainActivity.filename);
+        File outputFile = new File(directory.getAbsolutePath() + MainActivity.encryptedFilename);
 
         try {
             outputFile.createNewFile();

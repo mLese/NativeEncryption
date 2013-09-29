@@ -26,11 +26,16 @@ public class MainActivity extends Activity {
     Button decryptLibrary;
     Button decryptNative;
     Button validate;
+    Button cleanup;
 
     TextView status;
 
     SecretKey key;
     byte[] initVector = null;
+
+    public static String filename = "/jibberish.data";
+    public static String encryptedFilename = "/encrypted_jibberish.data";
+    public static String decryptedFilename = "/decrypted_jibberish.data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,7 @@ public class MainActivity extends Activity {
         decryptLibrary = (Button) findViewById(R.id.decrypt_library);
         decryptNative = (Button) findViewById(R.id.decrypt_native);
         validate = (Button) findViewById(R.id.validate);
+        cleanup = (Button) findViewById(R.id.cleanup);
         status = (TextView) findViewById(R.id.status);
     }
 
@@ -66,17 +72,8 @@ public class MainActivity extends Activity {
         decryptLibrary.setOnClickListener(decryptLibraryListener);
         decryptNative.setOnClickListener(decryptNativeListener);
         validate.setOnClickListener(validateListener);
+        cleanup.setOnClickListener(cleanupListener);
     }
-
-    View.OnClickListener generateFileListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            status.setText("Generating file...");
-            disableControls();
-            GenerateFileTask generateFile = new GenerateFileTask();
-            generateFile.execute();
-        }
-    };
 
     private class GenerateFileTask extends AsyncTask<Void, Void, Void> {
 
@@ -183,11 +180,21 @@ public class MainActivity extends Activity {
         }
     }
 
+    View.OnClickListener generateFileListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            status.setText("Generating file...");
+            disableControls();
+            GenerateFileTask generateFile = new GenerateFileTask();
+            generateFile.execute();
+        }
+    };
+
     View.OnClickListener encryptListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             File directory = Environment.getExternalStorageDirectory();
-            File jib = new File(directory.getAbsolutePath() + "/jibberish.data");
+            File jib = new File(directory.getAbsolutePath() + filename);
 
             if (!jib.exists()) {
                 status.setText("Generate file first");
@@ -204,7 +211,7 @@ public class MainActivity extends Activity {
         @Override
         public void onClick(View v) {
             File directory = Environment.getExternalStorageDirectory();
-            File encrypted = new File(directory.getAbsolutePath() + "/encrypted_jibberish.data");
+            File encrypted = new File(directory.getAbsolutePath() + encryptedFilename);
 
             if (!encrypted.exists() || (initVector == null)) {
                 status.setText("Encrypt file first");
@@ -221,7 +228,7 @@ public class MainActivity extends Activity {
         @Override
         public void onClick(View v) {
             File directory = Environment.getExternalStorageDirectory();
-            File encrypted = new File(directory.getAbsolutePath() + "/encrypted_jibberish.data");
+            File encrypted = new File(directory.getAbsolutePath() + encryptedFilename);
 
             if (!encrypted.exists() || (initVector == null)) {
                 status.setText("Encrypt file first");
@@ -238,8 +245,8 @@ public class MainActivity extends Activity {
         @Override
         public void onClick(View view) {
             File directory = Environment.getExternalStorageDirectory();
-            File encrypted = new File(directory + "/encrypted_jibberish.data");
-            File decrypted = new File(directory + "/decrypted_jibberish.data");
+            File encrypted = new File(directory + encryptedFilename);
+            File decrypted = new File(directory + decryptedFilename);
 
             if (!encrypted.exists() || !decrypted.exists()) {
                 status.setText("Encrypt/Decrypt first");
@@ -256,11 +263,12 @@ public class MainActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             File directory = Environment.getExternalStorageDirectory();
-            File originalFile = new File(directory.getAbsolutePath() + "/jibberish.data");
-            File decryptedFile = new File(directory.getAbsolutePath() + "/decrypted_jibberish.data");
+            File originalFile = new File(directory.getAbsolutePath() + filename);
+            File decryptedFile = new File(directory.getAbsolutePath() + decryptedFilename);
 
             FileInputStream originalIn = null;
             FileInputStream decryptedIn = null;
+
             try {
                 originalIn = new FileInputStream(originalFile);
                 decryptedIn = new FileInputStream(decryptedFile);
@@ -295,8 +303,49 @@ public class MainActivity extends Activity {
             if (result) {
                 status.setText("Encryption/Decryption Verified");
             } else {
-                status.setText("Something borked");
+                status.setText("Something went wrong");
             }
+        }
+    }
+
+    View.OnClickListener cleanupListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            disableControls();
+            status.setText("Deleting Files...");
+            CleanupTask cleanupTask = new CleanupTask();
+            cleanupTask.execute();
+        }
+    };
+
+    private class CleanupTask extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            File directory = Environment.getExternalStorageDirectory();
+            File jibberish = new File(directory.getAbsolutePath() + filename);
+
+            if (jibberish.exists()){
+                jibberish.delete();
+            }
+
+            File encrypted = new File(directory.getAbsolutePath() + encryptedFilename);
+            if (encrypted.exists()){
+                encrypted.delete();
+            }
+
+            File decrypted = new File(directory.getAbsolutePath() + decryptedFilename);
+            if (decrypted.exists()){
+                decrypted.delete();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            enableControls();
+            status.setText("Files removed");
         }
     }
 
@@ -306,6 +355,7 @@ public class MainActivity extends Activity {
         decryptLibrary.setEnabled(false);
         decryptNative.setEnabled(false);
         validate.setEnabled(false);
+        cleanup.setEnabled(false);
     }
 
     private void enableControls() {
@@ -314,5 +364,6 @@ public class MainActivity extends Activity {
         decryptLibrary.setEnabled(true);
         decryptNative.setEnabled(true);
         validate.setEnabled(true);
+        cleanup.setEnabled(true);
     }
 }

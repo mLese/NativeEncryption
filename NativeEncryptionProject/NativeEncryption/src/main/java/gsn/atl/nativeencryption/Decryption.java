@@ -53,8 +53,8 @@ public class Decryption {
 
         // Paths for encrypted and decrypted files
         File directory = Environment.getExternalStorageDirectory();
-        File inputFile = new File(directory.getAbsolutePath() + "/encrypted_jibberish.data");
-        File outputFile = new File(directory.getAbsolutePath() + "/decrypted_jibberish.data");
+        File inputFile = new File(directory.getAbsolutePath() + MainActivity.encryptedFilename);
+        File outputFile = new File(directory.getAbsolutePath() + MainActivity.decryptedFilename);
 
         // Create our output file
         try {
@@ -114,8 +114,8 @@ public class Decryption {
 
         // Paths for encrypted and decrypted files
         File directory = Environment.getExternalStorageDirectory();
-        File inputFile = new File(directory.getAbsolutePath() + "/encrypted_jibberish.data");
-        File outputFile = new File(directory.getAbsolutePath() + "/decrypted_jibberish.data");
+        File inputFile = new File(directory.getAbsolutePath() + MainActivity.encryptedFilename);
+        File outputFile = new File(directory.getAbsolutePath() + MainActivity.decryptedFilename);
 
         // Create our output file
         try {
