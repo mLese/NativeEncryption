@@ -8,7 +8,7 @@
     <string name="decrypt_native">Decrypt Native</string>
     <string name="validate">Validate</string>
     <string name="cleanup">Cleanup</string>
-    <string name="status">Status...</string>
+    <string name="status">Status&#8230;</string>
 
     <string name="action_settings">Settings</string>
 

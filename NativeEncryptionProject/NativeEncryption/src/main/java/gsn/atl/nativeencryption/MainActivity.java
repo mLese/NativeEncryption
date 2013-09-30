@@ -21,21 +21,21 @@ import javax.crypto.SecretKey;
 
 public class MainActivity extends Activity {
 
-    Button generateFile;
-    Button encrypt;
-    Button decryptLibrary;
-    Button decryptNative;
-    Button validate;
-    Button cleanup;
+    private Button generateFile;
+    private Button encrypt;
+    private Button decryptLibrary;
+    private Button decryptNative;
+    private Button validate;
+    private Button cleanup;
 
-    TextView status;
+    private TextView status;
 
-    SecretKey key;
-    byte[] initVector = null;
+    private SecretKey key;
+    private byte[] initVector = null;
 
-    public static String filename = "/jibberish.data";
-    public static String encryptedFilename = "/encrypted_jibberish.data";
-    public static String decryptedFilename = "/decrypted_jibberish.data";
+    public static final String filename = "/jibberish.data";
+    public static final String encryptedFilename = "/encrypted_jibberish.data";
+    public static final String decryptedFilename = "/decrypted_jibberish.data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
